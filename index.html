@@ -356,6 +356,14 @@
     </svg>
   </a>
 
+  <!-- ========== LIGHTBOX ========== -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm cursor-zoom-out" onclick="closeLightbox()">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition z-10" aria-label="Cerrar">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+    </button>
+    <img id="lightbox-img" class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl" onclick="event.stopPropagation()" alt="">
+  </div>
+
   <!-- ========== TOAST DE COMPARTIR ========== -->
   <div id="share-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-brand-green text-white text-sm font-semibold px-5 py-3 rounded-full shadow-xl pointer-events-none toast-enter" aria-live="polite"></div>
 
@@ -523,7 +531,7 @@
             : '';
           return `
           <div class="shrink-0 w-[280px] md:w-[320px] rounded-2xl overflow-hidden bg-brand-dark shadow-lg group relative select-none"${hidden ? ' aria-hidden="true"' : ''}>
-            <div class="aspect-[4/3] overflow-hidden">
+            <div class="aspect-[4/3] overflow-hidden cursor-zoom-in" onclick="openLightbox('${photo.url}')">
               <img src="${photo.url}" alt="${photo.description ? photo.description.replace(/"/g,'&quot;') : 'Novedad'}" loading="lazy" draggable="false" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
             ${descHtml}
@@ -606,6 +614,27 @@
         empty.classList.remove('hidden');
       }
     })();
+
+    // ── Lightbox ─────────────────────────────────────────────────────────────
+    const lightbox    = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    function openLightbox(url) {
+      lightboxImg.src = url;
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
 
     // ── Compartir en Instagram Stories ───────────────────────────────────────
     async function compartirFoto(photoId, urlCompartir) {
