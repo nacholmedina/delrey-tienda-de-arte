@@ -1,5 +1,5 @@
-const CACHE_NAME = 'delrey-admin-v2';
-const ASSETS = ['/admin/', '/admin/index.html', '/logo-delrey.png'];
+const CACHE_NAME = 'delrey-admin-v3';
+const ASSETS = ['/logo-delrey.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
@@ -16,7 +16,9 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  // Always serve API and HTML documents fresh from the network
   if (e.request.url.includes('/api/')) return;
+  if (e.request.destination === 'document') return;
   e.respondWith(
     fetch(e.request)
       .then(res => {

@@ -361,7 +361,7 @@
       photosEmpty.classList.add('hidden');
 
       try {
-        const res = await fetch(`${API}/photos`);
+        const res = await fetch(`${API}/photos`, { cache: 'no-store' });
         const { photos } = await res.json();
         photosLoading.classList.add('hidden');
 
@@ -527,7 +527,7 @@
       marcasEmpty.classList.add('hidden');
 
       try {
-        const res = await fetch(`${API}/marcas`);
+        const res = await fetch(`${API}/marcas`, { cache: 'no-store' });
         const { marcas } = await res.json();
         marcasLoading.classList.add('hidden');
 

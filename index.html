@@ -388,7 +388,7 @@
       // Load marcas from API, fall back to empty if none uploaded yet
       let marcas = [];
       try {
-        const res = await fetch('/api/marcas');
+        const res = await fetch('/api/marcas', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           marcas = data.marcas || [];
@@ -474,7 +474,7 @@
       const nextBtn = document.getElementById('carousel-next');
 
       try {
-        const res = await fetch('/api/photos');
+        const res = await fetch('/api/photos', { cache: 'no-store' });
         const { photos } = await res.json();
         loading.classList.add('hidden');
 
