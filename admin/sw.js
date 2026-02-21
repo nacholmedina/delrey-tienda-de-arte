@@ -1,4 +1,4 @@
-const CACHE_NAME = 'delrey-admin-v3';
+const CACHE_NAME = 'delrey-admin-v4';
 const ASSETS = ['/logo-delrey.png'];
 
 self.addEventListener('install', (e) => {
@@ -16,16 +16,9 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Always serve API and HTML documents fresh from the network
-  if (e.request.url.includes('/api/')) return;
-  if (e.request.destination === 'document') return;
+  // Only cache the logo; all other requests (HTML, API) go straight to network
+  if (!e.request.url.endsWith('/logo-delrey.png')) return;
   e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
-        return res;
-      })
-      .catch(() => caches.match(e.request))
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
