@@ -230,9 +230,6 @@
     const deleteCancel    = document.getElementById('delete-cancel');
     const deleteConfirm   = document.getElementById('delete-confirm');
 
-    // Verificar sesión al cargar
-    if (token) showDashboard();
-
     // ── LOGIN ──────────────────────────────────────────────────────────────────
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -625,6 +622,9 @@
         regs.forEach(reg => reg.unregister());
       });
     }
+
+    // Verificar sesión al cargar (must be after all const declarations)
+    if (token) showDashboard();
   </script>
 </body>
 </html>
