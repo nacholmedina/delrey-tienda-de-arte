@@ -111,9 +111,9 @@
       <!-- Desktop menu -->
       <ul class="hidden md:flex items-center gap-8 text-sm font-semibold">
         <li><a href="#inicio"    class="nav-link relative py-1 text-brand-light/70 hover:text-white transition-colors duration-200">Inicio</a></li>
-        <li><a href="#marcas"   class="nav-link relative py-1 text-brand-light/70 hover:text-white transition-colors duration-200">Marcas</a></li>
         <li><a href="#contacto" class="nav-link relative py-1 text-brand-light/70 hover:text-white transition-colors duration-200">Contacto</a></li>
         <li><a href="#novedades" class="nav-link relative py-1 text-brand-light/70 hover:text-white transition-colors duration-200">Novedades</a></li>
+        <li><a href="#marcas"   class="nav-link relative py-1 text-brand-light/70 hover:text-white transition-colors duration-200">Marcas</a></li>
         <li>
           <a href="https://www.instagram.com/delreytiendadearte/" target="_blank" rel="noopener noreferrer"
             class="inline-flex items-center gap-1.5 bg-brand-green text-white px-4 py-1.5 rounded-full text-sm font-bold hover:bg-brand-greenlight hover:scale-105 active:scale-95 transition-all duration-200">
@@ -133,9 +133,9 @@
     <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
       <ul class="flex flex-col gap-1 px-6 pb-4 text-sm font-semibold">
         <li><a href="#inicio"    class="mobile-link block py-2.5 text-brand-light/70 hover:text-white hover:pl-2 transition-all duration-200">Inicio</a></li>
-        <li><a href="#marcas"   class="mobile-link block py-2.5 text-brand-light/70 hover:text-white hover:pl-2 transition-all duration-200">Marcas</a></li>
         <li><a href="#contacto" class="mobile-link block py-2.5 text-brand-light/70 hover:text-white hover:pl-2 transition-all duration-200">Contacto</a></li>
         <li><a href="#novedades" class="mobile-link block py-2.5 text-brand-light/70 hover:text-white hover:pl-2 transition-all duration-200">Novedades</a></li>
+        <li><a href="#marcas"   class="mobile-link block py-2.5 text-brand-light/70 hover:text-white hover:pl-2 transition-all duration-200">Marcas</a></li>
         <li>
           <a href="https://www.instagram.com/delreytiendadearte/" target="_blank" rel="noopener noreferrer"
             class="inline-flex items-center gap-1.5 mt-1 bg-brand-green text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-brand-greenlight active:scale-95 transition-all duration-200">
@@ -169,20 +169,6 @@
         </svg>
         Ver Novedades
       </a>
-    </section>
-
-    <!-- ========== MARCAS ========== -->
-    <section id="marcas" class="bg-brand-gray py-16">
-      <div class="max-w-5xl mx-auto px-6 mb-10 text-center">
-        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-          Nuestras <span class="text-brand-green">Marcas</span>
-        </h2>
-        <p class="text-brand-light/50 text-sm">Trabajamos con las mejores marcas del mercado artístico</p>
-      </div>
-      <!-- Full-bleed infinite scroll carousel -->
-      <div class="overflow-hidden py-3">
-        <div id="marcas-track" class="marcas-scroll"></div>
-      </div>
     </section>
 
     <!-- ========== CONTACTO & UBICACIÓN ========== -->
@@ -308,19 +294,10 @@
           Últimas <span class="text-brand-green">Novedades</span>
         </h2>
 
-        <div id="carousel-wrapper" class="relative">
-          <!-- Flecha izquierda -->
-          <button id="carousel-prev" class="hidden absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 bg-brand-dark/90 hover:bg-brand-green hover:text-white text-brand-light rounded-full flex items-center justify-center shadow-lg transition-all duration-200" aria-label="Anterior">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
-          </button>
-
-          <!-- Track del carrusel -->
-          <div id="carousel-track" class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 scrollbar-hide"></div>
-
-          <!-- Flecha derecha -->
-          <button id="carousel-next" class="hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 bg-brand-dark/90 hover:bg-brand-green hover:text-white text-brand-light rounded-full flex items-center justify-center shadow-lg transition-all duration-200" aria-label="Siguiente">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
-          </button>
+        <div class="overflow-hidden pb-4">
+          <div id="carousel-outer" class="overflow-hidden">
+            <div id="carousel-track" class="flex gap-4 will-change-transform"></div>
+          </div>
         </div>
 
         <!-- Estado vacío -->
@@ -330,6 +307,20 @@
         <div id="carousel-loading" class="flex justify-center py-12">
           <div class="w-8 h-8 border-2 border-brand-green/30 border-t-brand-green rounded-full animate-spin"></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ========== MARCAS ========== -->
+    <section id="marcas" class="bg-brand-gray py-16">
+      <div class="max-w-5xl mx-auto px-6 mb-10 text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
+          Nuestras <span class="text-brand-green">Marcas</span>
+        </h2>
+        <p class="text-brand-light/50 text-sm">Trabajamos con las mejores marcas de librería y arte</p>
+      </div>
+      <!-- Full-bleed infinite scroll carousel -->
+      <div class="overflow-hidden py-3">
+        <div id="marcas-track" class="marcas-scroll"></div>
       </div>
     </section>
 
@@ -509,14 +500,12 @@
       document.addEventListener('touchend', () => { dragging = false; });
     })();
 
-    // ── Carrusel de novedades ─────────────────────────────────────────────────
+    // ── Carrusel de novedades (JS-driven, drag-enabled) ────────────────────────
     (async function loadCarousel() {
       const track   = document.getElementById('carousel-track');
+      const outer   = document.getElementById('carousel-outer');
       const loading = document.getElementById('carousel-loading');
       const empty   = document.getElementById('carousel-empty');
-      const prevBtn = document.getElementById('carousel-prev');
-      const nextBtn = document.getElementById('carousel-next');
-
       try {
         const res = await fetch('/api/photos', { cache: 'no-store' });
         const { photos } = await res.json();
@@ -527,23 +516,15 @@
           return;
         }
 
-        // Mostrar flechas en escritorio si hay más de 3 fotos
-        if (photos.length > 3) {
-          prevBtn.classList.remove('hidden');
-          prevBtn.classList.add('hidden', 'md:flex');
-          nextBtn.classList.remove('hidden');
-          nextBtn.classList.add('hidden', 'md:flex');
-        }
-
-        track.innerHTML = photos.map(photo => {
+        const makeCard = (photo, hidden) => {
           const shareUrl = encodeURIComponent(`${window.location.origin}/api/share/${photo.id}`);
           const descHtml = photo.description
             ? `<p class="text-sm text-brand-light/70 px-4 pb-1">${photo.description.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`
             : '';
           return `
-          <div class="snap-start shrink-0 w-[280px] md:w-[320px] rounded-2xl overflow-hidden bg-brand-dark shadow-lg group relative">
+          <div class="shrink-0 w-[280px] md:w-[320px] rounded-2xl overflow-hidden bg-brand-dark shadow-lg group relative select-none"${hidden ? ' aria-hidden="true"' : ''}>
             <div class="aspect-[4/3] overflow-hidden">
-              <img src="${photo.url}" alt="${photo.description ? photo.description.replace(/"/g,'&quot;') : 'Novedad'}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="${photo.url}" alt="${photo.description ? photo.description.replace(/"/g,'&quot;') : 'Novedad'}" loading="lazy" draggable="false" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
             ${descHtml}
             <div class="p-3 pt-1 flex justify-end">
@@ -557,10 +538,67 @@
               </button>
             </div>
           </div>`;
-        }).join('');
+        };
 
-        prevBtn.addEventListener('click', () => track.scrollBy({ left: -340, behavior: 'smooth' }));
-        nextBtn.addEventListener('click', () => track.scrollBy({ left:  340, behavior: 'smooth' }));
+        // Duplicate cards for seamless infinite loop
+        track.innerHTML =
+          photos.map(p => makeCard(p, false)).join('') +
+          photos.map(p => makeCard(p, true)).join('');
+
+        // JS-driven infinite scroll with drag
+        let novScrollX = 0;
+        let novHalfWidth = 0;
+        let novDragging = false;
+        let novLastX = 0;
+        const NOV_SPEED = 0.4;
+
+        function novTick() {
+          if (!novHalfWidth) novHalfWidth = track.scrollWidth / 2;
+          if (!novDragging) {
+            novScrollX += NOV_SPEED;
+            if (novScrollX >= novHalfWidth) novScrollX -= novHalfWidth;
+          }
+          track.style.transform = `translateX(${-novScrollX}px)`;
+          requestAnimationFrame(novTick);
+        }
+        requestAnimationFrame(novTick);
+
+        // Mouse drag
+        outer.style.cursor = 'grab';
+        outer.addEventListener('mousedown', e => {
+          novDragging = true;
+          novLastX = e.clientX;
+          outer.style.cursor = 'grabbing';
+          e.preventDefault();
+        });
+        document.addEventListener('mousemove', e => {
+          if (!novDragging) return;
+          const dx = novLastX - e.clientX;
+          novScrollX += dx;
+          if (novScrollX >= novHalfWidth) novScrollX -= novHalfWidth;
+          if (novScrollX < 0) novScrollX += novHalfWidth;
+          novLastX = e.clientX;
+        });
+        document.addEventListener('mouseup', () => {
+          if (!novDragging) return;
+          novDragging = false;
+          outer.style.cursor = 'grab';
+        });
+
+        // Touch drag
+        outer.addEventListener('touchstart', e => {
+          novDragging = true;
+          novLastX = e.touches[0].clientX;
+        }, { passive: true });
+        document.addEventListener('touchmove', e => {
+          if (!novDragging) return;
+          const dx = novLastX - e.touches[0].clientX;
+          novScrollX += dx;
+          if (novScrollX >= novHalfWidth) novScrollX -= novHalfWidth;
+          if (novScrollX < 0) novScrollX += novHalfWidth;
+          novLastX = e.touches[0].clientX;
+        }, { passive: true });
+        document.addEventListener('touchend', () => { novDragging = false; });
 
       } catch {
         loading.classList.add('hidden');
