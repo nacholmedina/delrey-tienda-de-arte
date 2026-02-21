@@ -11,7 +11,7 @@ const s3 = new S3Client({
 
 const BUCKET = process.env.R2_BUCKET_NAME;
 const PUBLIC_URL = process.env.R2_PUBLIC_URL;
-const FOLDER = 'delrey-photos';
+const FOLDER = 'photos';
 
 async function getManifest() {
   try {
@@ -116,4 +116,90 @@ export async function getPhotoStream(id) {
 
   const { Body } = await s3.send(new GetObjectCommand({ Bucket: BUCKET, Key: key }));
   return { Body, contentType };
+}
+
+// ── MARCAS ────────────────────────────────────────────────────────────────────
+const MARCAS_FOLDER = 'marcas';
+
+async function getMarcasManifest() {
+  try {
+    const { Body } = await s3.send(
+      new GetObjectCommand({ Bucket: BUCKET, Key: `${MARCAS_FOLDER}/manifest.json` })
+    );
+    const text = await Body.transformToString();
+    return JSON.parse(text);
+  } catch {
+    return {};
+  }
+}
+
+async function saveMarcasManifest(manifest) {
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: `${MARCAS_FOLDER}/manifest.json`,
+      Body: JSON.stringify(manifest),
+      ContentType: 'application/json',
+    })
+  );
+}
+
+export async function listMarcas() {
+  const [{ Contents = [] }, manifest] = await Promise.all([
+    s3.send(new ListObjectsV2Command({ Bucket: BUCKET, Prefix: `${MARCAS_FOLDER}/` })),
+    getMarcasManifest(),
+  ]);
+
+  return Contents
+    .filter(obj => obj.Key !== `${MARCAS_FOLDER}/` && obj.Key !== `${MARCAS_FOLDER}/manifest.json`)
+    .map(obj => {
+      const id = obj.Key.replace(`${MARCAS_FOLDER}/`, '').replace(/\.[^.]+$/, '');
+      return {
+        id,
+        url: `${PUBLIC_URL}/${obj.Key}`,
+        key: obj.Key,
+        name: manifest[id]?.name || '',
+        uploadedAt: obj.LastModified?.toISOString(),
+      };
+    })
+    .sort((a, b) => new Date(a.uploadedAt) - new Date(b.uploadedAt));
+}
+
+export async function uploadMarca(id, buffer, contentType, name) {
+  const ext = contentType === 'image/png' ? 'png'
+    : contentType === 'image/webp' ? 'webp'
+    : 'jpg';
+  const key = `${MARCAS_FOLDER}/${id}.${ext}`;
+
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: key,
+      Body: buffer,
+      ContentType: contentType,
+    })
+  );
+
+  const url = `${PUBLIC_URL}/${key}`;
+  const manifest = await getMarcasManifest();
+  manifest[id] = { name: name || '', url };
+  await saveMarcasManifest(manifest);
+
+  return { id, url, key, name: name || '' };
+}
+
+export async function deleteMarca(id) {
+  const extensions = ['jpg', 'png', 'webp'];
+  await Promise.all(
+    extensions.map(ext =>
+      s3.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: `${MARCAS_FOLDER}/${id}.${ext}` }))
+        .catch(() => {})
+    )
+  );
+
+  const manifest = await getMarcasManifest();
+  if (manifest[id]) {
+    delete manifest[id];
+    await saveMarcasManifest(manifest);
+  }
 }

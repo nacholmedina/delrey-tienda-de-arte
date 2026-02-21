@@ -9,11 +9,11 @@
   <!-- Open Graph -->
   <meta property="og:title" content="DelRey Tienda de Arte - Librería Artística">
   <meta property="og:description" content="Tu librería artística de confianza en Adelia María, Córdoba. Arte, pintura, dibujo y materiales creativos.">
-  <meta property="og:image" content="Logo%20Delrey.jfif">
+  <meta property="og:image" content="/logo-delrey.png">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" type="image/jpeg" href="Logo%20Delrey.jfif">
+  <link rel="icon" type="image/png" href="/logo-delrey.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -21,16 +21,17 @@
         extend: {
           colors: {
             brand: {
-              dark: '#141a17',
-              gray: '#1c2520',
-              green: '#0a714e',
-              greenlight: '#0d8a5e',
-              light: '#e8f2ed',
+              dark: '#071a1b',
+              gray: '#0d3c3f',
+              green: '#12676a',
+              greenlight: '#1a8c90',
+              light: '#c8eced',
             }
           },
           fontFamily: {
             sans: ['"Poppins"', 'system-ui', 'sans-serif'],
-            script: ['"Dancing Script"', 'cursive'],
+            logo: ['"Marykate"', 'sans-serif'],
+            subtitle: ['"Clear Sans"', 'sans-serif'],
           }
         }
       }
@@ -38,8 +39,16 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/clear-sans" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Marykate';
+      src: url('marykate-regular/marykate-regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     html { scroll-behavior: smooth; scroll-padding-top: 3.5rem; }
 
     /* Navbar link underline */
@@ -50,7 +59,7 @@
       bottom: -2px;
       width: 0;
       height: 2px;
-      background: #0a714e;
+      background: #12676a;
       border-radius: 1px;
       transition: width 0.3s ease;
     }
@@ -58,20 +67,30 @@
     .nav-link.active::after { width: 100%; }
 
     /* Brands carousel */
-    @keyframes scroll-marcas {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
     .marcas-scroll {
       display: flex;
       width: max-content;
-      animation: scroll-marcas 40s linear infinite;
+      will-change: transform;
     }
-    .marcas-scroll:hover { animation-play-state: paused; }
 
     /* Hide scrollbar */
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+    /* WhatsApp button pulse */
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .whatsapp-pulse::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #25D366;
+      animation: pulse-ring 2s ease-out infinite;
+      z-index: -1;
+    }
 
     /* Share toast */
     .toast-enter { opacity: 0; transform: translateY(1rem); }
@@ -86,8 +105,8 @@
     <div class="max-w-5xl mx-auto px-6 flex items-center justify-between h-14">
       <!-- Logo text -->
       <a href="#inicio" class="flex flex-col leading-none hover:opacity-80 transition-opacity">
-        <span class="font-script font-bold text-2xl text-white leading-none">DelRey</span>
-        <span class="font-sans text-[8px] font-bold tracking-[0.28em] text-white/70 uppercase leading-none mt-0.5">Librería Artística</span>
+        <span class="font-logo font-semibold text-2xl text-white leading-none">DelRey</span>
+        <span class="font-subtitle text-[7px] tracking-[0.3em] text-white/70 uppercase leading-none mt-0.5" style="font-weight:700;">Librería Artística</span>
       </a>
       <!-- Desktop menu -->
       <ul class="hidden md:flex items-center gap-8 text-sm font-semibold">
@@ -131,19 +150,18 @@
   <main>
 
     <!-- ========== HERO ========== -->
-    <section id="inicio" class="min-h-[75vh] flex flex-col items-center justify-center px-6 py-20 text-center">
-      <img
-        src="Logo%20Delrey.jfif"
-        alt="DelRey Tienda de Arte - Librería Artística"
-        class="w-full max-w-xs md:max-w-sm mx-auto mb-10 rounded-2xl shadow-2xl shadow-brand-green/20"
-      >
-      <p class="text-xl md:text-2xl text-brand-light/70 max-w-lg leading-relaxed font-light tracking-wide">
+    <section id="inicio" class="min-h-screen flex flex-col items-center justify-center px-6 py-20 text-center bg-brand-green">
+      <div class="flex flex-col items-center mb-10 select-none">
+        <span class="font-logo font-semibold text-white leading-none text-[7rem] md:text-[11rem]">DelRey</span>
+        <span class="font-subtitle text-white uppercase mt-3 text-[0.9rem] md:text-[1.2rem] tracking-[0.35em]" style="font-weight:700;">LIBRERÍA - ARTÍSTICA</span>
+      </div>
+      <p class="text-xl md:text-2xl text-white/80 max-w-lg leading-relaxed font-light tracking-wide">
         Tu tienda de arte y librería artística en
-        <span class="text-brand-green font-semibold">Adelia María, Córdoba</span>.
+        <span class="text-white font-semibold">Adelia María, Córdoba</span>.
       </p>
       <a
         href="#novedades"
-        class="mt-10 inline-flex items-center gap-2 bg-brand-green text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg shadow-brand-green/20 hover:shadow-brand-green/40 hover:bg-brand-greenlight hover:scale-105 active:scale-95 transition-all duration-200"
+        class="mt-10 inline-flex items-center gap-2 bg-white text-brand-green font-bold px-8 py-4 rounded-full text-lg shadow-lg shadow-black/20 hover:bg-white/90 hover:scale-105 active:scale-95 transition-all duration-200"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -201,7 +219,7 @@
               </div>
               <div>
                 <h3 class="font-bold text-white text-lg">Teléfono</h3>
-                <a href="tel:+5493585407025" class="text-brand-green hover:underline text-lg">
+                <a href="https://wa.me/5493585407025?text=Hola%20DelRey!%20Quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener noreferrer" class="text-brand-green hover:underline text-lg">
                   3585 40-7025
                 </a>
               </div>
@@ -304,6 +322,19 @@
     </div>
   </footer>
 
+  <!-- ========== WHATSAPP FLOATING BUTTON ========== -->
+  <a
+    href="https://wa.me/5493585407025?text=Hola%20DelRey!%20Quisiera%20hacer%20una%20consulta."
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-pulse fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform duration-200"
+    aria-label="Contactar por WhatsApp"
+  >
+    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
   <!-- ========== TOAST DE COMPARTIR ========== -->
   <div id="share-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-brand-green text-white text-sm font-semibold px-5 py-3 rounded-full shadow-xl pointer-events-none toast-enter" aria-live="polite"></div>
 
@@ -349,38 +380,89 @@
       });
     });
 
-    // ── Carrusel de marcas (auto-scroll infinito) ─────────────────────────────
-    (function initMarcas() {
-      const marcas = [
-        { src: 'logos/Americalogo.jfif',                                         alt: 'América' },
-        { src: 'logos/biclogo.jfif',                                              alt: 'BIC' },
-        { src: 'logos/eqlogo.jfif',                                               alt: 'EQ' },
-        { src: 'logos/exitologo.jpeg',                                            alt: 'Éxito' },
-        { src: 'logos/filgo%20new.jpg',                                           alt: 'Filgo' },
-        { src: 'logos/fun%20world.png',                                           alt: 'Fun World' },
-        { src: 'logos/images.png',                                                alt: 'Marca' },
-        { src: 'logos/lapices-giotto-supermina-x36.jpg',                          alt: 'Giotto' },
-        { src: 'logos/laprda.jfif',                                               alt: 'La Prida' },
-        { src: 'logos/maped.png',                                                 alt: 'Maped' },
-        { src: 'logos/norpack.jfif',                                              alt: 'Norpack' },
-        { src: 'logos/png-clipart-logo-sharpie-pens-brand-costa-rica-text-logo.png', alt: 'Sharpie' },
-        { src: 'logos/Rivadavia.jpeg',                                            alt: 'Rivadavia' },
-        { src: 'logos/Skora%20logo.jpeg',                                         alt: 'Skora' },
-        { src: 'logos/triunfante.jpg',                                            alt: 'Triunfante' },
-        { src: 'logos/voligoma.jfif',                                             alt: 'Voligoma' },
-        { src: 'logos/Wilson%20cuadrado.jpeg',                                    alt: 'Wilson' },
-      ];
-
+    // ── Carrusel de marcas (JS-driven, drag-enabled) ──────────────────────────
+    (async function initMarcas() {
       const track = document.getElementById('marcas-track');
-      // Duplicate items for seamless infinite loop; aria-hidden on second set
+      const outer = track.parentElement;
+
+      // Load marcas from API, fall back to empty if none uploaded yet
+      let marcas = [];
+      try {
+        const res = await fetch('/api/marcas');
+        if (res.ok) {
+          const data = await res.json();
+          marcas = data.marcas || [];
+        }
+      } catch {}
+
+      if (marcas.length === 0) {
+        track.parentElement.closest('section').classList.add('hidden');
+        return;
+      }
+
       const makeItem = (m, hidden) =>
         `<div class="shrink-0 w-28 h-28 bg-white rounded-xl p-3 flex items-center justify-center mr-6 shadow-sm"${hidden ? ' aria-hidden="true"' : ''}>
-          <img src="${m.src}" alt="${m.alt}" loading="lazy" class="w-full h-full object-contain">
+          <img src="${m.url}" alt="${m.name || 'Marca'}" loading="lazy" draggable="false" class="w-full h-full object-contain select-none">
         </div>`;
 
       track.innerHTML =
         marcas.map(m => makeItem(m, false)).join('') +
         marcas.map(m => makeItem(m, true)).join('');
+
+      // JS-driven scroll — enables seamless drag takeover
+      let scrollX   = 0;
+      let halfWidth = 0;
+      let dragging  = false;
+      let lastX     = 0;
+      const SPEED   = 0.6; // px per frame
+
+      function tick() {
+        if (!halfWidth) halfWidth = track.scrollWidth / 2;
+        if (!dragging) {
+          scrollX += SPEED;
+          if (scrollX >= halfWidth) scrollX -= halfWidth;
+        }
+        track.style.transform = `translateX(${-scrollX}px)`;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // Mouse drag
+      outer.style.cursor = 'grab';
+      outer.addEventListener('mousedown', e => {
+        dragging = true;
+        lastX = e.clientX;
+        outer.style.cursor = 'grabbing';
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        const dx = lastX - e.clientX;
+        scrollX += dx;
+        if (scrollX >= halfWidth) scrollX -= halfWidth;
+        if (scrollX < 0) scrollX += halfWidth;
+        lastX = e.clientX;
+      });
+      document.addEventListener('mouseup', () => {
+        if (!dragging) return;
+        dragging = false;
+        outer.style.cursor = 'grab';
+      });
+
+      // Touch drag
+      outer.addEventListener('touchstart', e => {
+        dragging = true;
+        lastX = e.touches[0].clientX;
+      }, { passive: true });
+      document.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        const dx = lastX - e.touches[0].clientX;
+        scrollX += dx;
+        if (scrollX >= halfWidth) scrollX -= halfWidth;
+        if (scrollX < 0) scrollX += halfWidth;
+        lastX = e.touches[0].clientX;
+      }, { passive: true });
+      document.addEventListener('touchend', () => { dragging = false; });
     })();
 
     // ── Carrusel de novedades ─────────────────────────────────────────────────
