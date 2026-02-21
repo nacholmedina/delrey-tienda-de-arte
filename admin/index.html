@@ -521,18 +521,17 @@
     });
 
     async function loadMarcas() {
-      marcasLoading.classList.remove('hidden');
-      marcasLoading.classList.add('flex');
-      marcasGrid.innerHTML = '';
-      marcasEmpty.classList.add('hidden');
+      if (marcasLoading) { marcasLoading.classList.remove('hidden'); marcasLoading.classList.add('flex'); }
+      if (marcasGrid) marcasGrid.innerHTML = '';
+      if (marcasEmpty) marcasEmpty.classList.add('hidden');
 
       try {
         const res = await fetch(`${API}/marcas`, { cache: 'no-store' });
         const { marcas } = await res.json();
-        marcasLoading.classList.add('hidden');
+        if (marcasLoading) marcasLoading.classList.add('hidden');
 
         if (!marcas || marcas.length === 0) {
-          marcasEmpty.classList.remove('hidden');
+          if (marcasEmpty) marcasEmpty.classList.remove('hidden');
           return;
         }
 
@@ -554,9 +553,8 @@
           </div>
         `).join('');
       } catch {
-        marcasLoading.classList.add('hidden');
-        marcasEmpty.textContent = 'Error al cargar las marcas.';
-        marcasEmpty.classList.remove('hidden');
+        if (marcasLoading) marcasLoading.classList.add('hidden');
+        if (marcasEmpty) { marcasEmpty.textContent = 'Error al cargar las marcas.'; marcasEmpty.classList.remove('hidden'); }
       }
     }
 
@@ -621,8 +619,11 @@
       else marcaStatus.classList.add('text-brand-green');
     }
 
+    // Unregister any service workers to prevent stale HTML caching
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(reg => reg.unregister());
+      });
     }
   </script>
 </body>
